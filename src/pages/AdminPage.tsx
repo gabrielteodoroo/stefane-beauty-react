@@ -51,7 +51,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ adicionarJoia }) => {
           <h1 className="text-3xl font-bold text-gray-800">Adicionar Nova Joia</h1>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors"
+            className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors cursor-pointer"
           >
             <SignOut className="w-4 h-4" />
             Sair
@@ -142,7 +142,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ adicionarJoia }) => {
             
             <button
               onClick={handleSubmit}
-              className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg font-semibold transition-colors"
+              className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg font-semibold transition-colors cursor-pointer"
             >
               Adicionar Joia
             </button>

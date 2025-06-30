@@ -82,7 +82,7 @@ export const CatalogoPage: React.FC<CatalogoPageProps> = ({ joias }) => {
                 <button 
                   onClick={() => handleWhatsApp(jewelry)}
                   disabled={jewelry.estoque === 0}
-                  className={`w-full py-2 rounded-lg font-medium transition-colors ${
+                  className={`w-full py-2 rounded-lg font-medium transition-colors cursor-pointer ${
                     jewelry.estoque > 0 
                       ? 'bg-green-500 hover:bg-green-600 text-white' 
                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'

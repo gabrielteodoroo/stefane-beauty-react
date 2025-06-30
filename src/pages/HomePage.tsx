@@ -47,7 +47,7 @@ export const HomePage: React.FC = () => {
           
           <button 
             onClick={() => handleWhatsApp()}
-            className="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all transform hover:scale-105 shadow-lg"
+            className="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all transform hover:scale-105 shadow-lg cursor-pointer"
           >
             <Phone className="w-5 h-5 inline mr-2" />
             Agendar Consulta
@@ -77,7 +77,7 @@ export const HomePage: React.FC = () => {
           <div className="grid md:grid-cols-2 gap-6">
             <button 
               onClick={() => navigate('/catalogo')}
-              className="bg-purple-600 hover:bg-purple-700 text-white p-8 rounded-lg text-center transition-colors"
+              className="bg-purple-600 hover:bg-purple-700 text-white p-8 rounded-lg text-center transition-colors cursor-pointer"
             >
               <ShoppingBag className="w-12 h-12 mx-auto mb-4" />
               <h3 className="text-2xl font-bold mb-2">Ver Catálogo</h3>
@@ -86,7 +86,7 @@ export const HomePage: React.FC = () => {
             
             <button 
               onClick={() => navigate('/cuidados')}
-              className="bg-rose-600 hover:bg-rose-700 text-white p-8 rounded-lg text-center transition-colors"
+              className="bg-rose-600 hover:bg-rose-700 text-white p-8 rounded-lg text-center transition-colors cursor-pointer"
             >
               <Heart className="w-12 h-12 mx-auto mb-4" />
               <h3 className="text-2xl font-bold mb-2">Cuidados</h3>

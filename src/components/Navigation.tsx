@@ -43,7 +43,7 @@ export const Navigation: React.FC = () => {
           <div className="flex items-center space-x-4">
             <button 
               onClick={() => handleWhatsApp()}
-              className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors"
+              className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors cursor-pointer"
             >
               <Phone className="w-4 h-4 inline mr-1" />
               WhatsApp
@@ -51,7 +51,7 @@ export const Navigation: React.FC = () => {
             
             <button
               onClick={() => navigate('/admin')}
-              className="text-gray-500 hover:text-purple-600 text-sm"
+              className="text-gray-500 hover:text-purple-600 text-sm cursor-pointer"
             >
               Admin
             </button>

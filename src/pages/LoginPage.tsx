@@ -52,7 +52,7 @@ export const LoginPage: React.FC = () => {
               />
               <button
                 type="button"
-                className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
@@ -71,7 +71,7 @@ export const LoginPage: React.FC = () => {
           <div>
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors cursor-pointer"
             >
               Entrar
             </button>
@@ -81,7 +81,7 @@ export const LoginPage: React.FC = () => {
             <button
               type="button"
               onClick={() => navigate('/')}
-              className="text-sm text-purple-600 hover:text-purple-500"
+              className="text-sm text-purple-600 hover:text-purple-500 cursor-pointer"
             >
               Voltar ao site
             </button>

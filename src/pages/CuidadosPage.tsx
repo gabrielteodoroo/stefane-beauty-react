@@ -70,7 +70,7 @@ export const CuidadosPage: React.FC = () => {
         <div className="text-center">
           <button 
             onClick={() => handleWhatsApp()}
-            className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
+            className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors cursor-pointer"
           >
             Dúvidas? Fale Comigo!
           </button>

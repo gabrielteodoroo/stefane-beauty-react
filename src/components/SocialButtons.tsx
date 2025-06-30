@@ -37,7 +37,7 @@ export const SocialButtons: React.FC<SocialButtonsProps> = ({
       <div className={`fixed bottom-6 right-6 z-50 flex flex-col gap-3 ${className}`}>
         <button
           onClick={() => handleWhatsApp()}
-          className={`${baseClasses} bg-green-500 hover:bg-green-600 text-white`}
+          className={`${baseClasses} bg-green-500 hover:bg-green-600 text-white cursor-pointer`}
           title="Fale conosco no WhatsApp"
         >
           <WhatsappLogo size={iconSizes[size]} weight="fill" />
@@ -45,7 +45,7 @@ export const SocialButtons: React.FC<SocialButtonsProps> = ({
 
         <button
           onClick={handleInstagram}
-          className={`${baseClasses} bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white`}
+          className={`${baseClasses} bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white cursor-pointer`}
           title="Siga-nos no Instagram"
         >
           <InstagramLogo size={iconSizes[size]} weight="fill" />
@@ -58,7 +58,7 @@ export const SocialButtons: React.FC<SocialButtonsProps> = ({
     <div className={`flex gap-3 ${className}`}>
       <button
         onClick={() => handleWhatsApp()}
-        className={`${baseClasses} bg-green-500 hover:bg-green-600 text-white`}
+        className={`${baseClasses} bg-green-500 hover:bg-green-600 text-white cursor-pointer`}
         title="Fale conosco no WhatsApp"
       >
         <WhatsappLogo size={iconSizes[size]} weight="fill" />
@@ -66,7 +66,7 @@ export const SocialButtons: React.FC<SocialButtonsProps> = ({
 
       <button
         onClick={handleInstagram}
-        className={`${baseClasses} bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white`}
+        className={`${baseClasses} bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white cursor-pointer`}
         title="Siga-nos no Instagram"
       >
         <InstagramLogo size={iconSizes[size]} weight="fill" />
