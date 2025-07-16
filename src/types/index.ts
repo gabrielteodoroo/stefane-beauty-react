@@ -28,6 +28,8 @@ export interface Servico {
   titulo: string;
   desc: string;
   icone: string;
+  valor: number;
+  categoria: string;
 }
 
 export type PageType = 'home' | 'catalogo' | 'cuidados'; 

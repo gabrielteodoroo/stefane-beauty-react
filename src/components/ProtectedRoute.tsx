@@ -1,16 +1,8 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
-import { AdminPage } from '../pages/AdminPage';
-import { useJoias } from '../hooks/useJoias';
+import { Navigate, Outlet } from 'react-router-dom';
+import { useAuthContext } from '../contexts/useAuthContext';
 
-export const ProtectedRoute: React.FC = () => {
-  const { isAuthenticated } = useAuth();
-  const { adicionarJoia } = useJoias();
-
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-
-  return <AdminPage adicionarJoia={adicionarJoia} />;
-}; 
+export default function ProtectedRoute() {
+  const { token } = useAuthContext();
+  return token ? <Outlet /> : <Navigate to="/login" replace />;
+}
