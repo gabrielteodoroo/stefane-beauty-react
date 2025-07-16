@@ -9,7 +9,7 @@ export const Footer: React.FC = () => {
         <div className="grid md:grid-cols-3 gap-8">
           <div>
             <h3 className="font-bold text-lg mb-4">Stefane Piercing</h3>
-            <p className="text-gray-300">Especialista em body piercing com mais de 5 anos de experiência.</p>
+            <p className="text-gray-300">Especialista em body piercing.</p>
             <div className="mt-4">
               <SocialButtons variant="inline" size="sm" />
             </div>

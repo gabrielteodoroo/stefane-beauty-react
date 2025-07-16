@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 
-/* Estilos básicos que não conflitam com Tailwind */
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
