@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useEffect as useEffectReact } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { jewelSchema } from '../../schemas/jewel.schema';
@@ -29,7 +30,6 @@ export default function JewelForm() {
     }
   }, [isEdit, jewel, setValue]);
 
-  // Filtra categorias já usadas, exceto a atual (em edição)
   const usedCategories = allJewels
     .filter((j: JewelData) => !isEdit || j.id !== id)
     .map((j: JewelData) => j.category);
@@ -44,38 +44,47 @@ export default function JewelForm() {
     navigate('/jewels');
   };
 
+  useEffectReact(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto mt-10 p-4 border rounded">
-      <h2 className="text-xl mb-4">{isEdit ? 'Editar Joia' : 'Cadastrar Joia'}</h2>
-      <FormField label="Nome" error={errors.name?.message}>
-        <input type="text" {...register('name')} className="w-full border p-2" />
-      </FormField>
-      <FormField label="Preço" error={errors.price?.message}>
-        <input type="number" step="0.01" {...register('price', { valueAsNumber: true })} className="w-full border p-2" />
-      </FormField>
-      <FormField label="Estoque" error={errors.stock?.message}>
-        <input type="number" {...register('stock', { valueAsNumber: true })} className="w-full border p-2" />
-      </FormField>
-      <FormField label="Categoria" error={errors.category?.message}>
-        <select {...register('category')} className="w-full border p-2">
-          <option value="">Selecione uma categoria</option>
-          {availableCategories.map(cat => (
-            <option key={cat.id} value={cat.id}>{cat.nome}</option>
-          ))}
-        </select>
-      </FormField>
-      <FormField label="Material" error={errors.material?.message}>
-        <input type="text" {...register('material')} className="w-full border p-2" />
-      </FormField>
-      <FormField label="URL da Imagem" error={errors.imageUrl?.message}>
-        <input type="url" {...register('imageUrl')} className="w-full border p-2" />
-      </FormField>
-      <FormField label="Descrição" error={errors.description?.message}>
-        <textarea {...register('description')} className="w-full border p-2" />
-      </FormField>
-      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-        {isEdit ? 'Salvar' : 'Cadastrar'}
-      </button>
-    </form>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+      <form onSubmit={handleSubmit(onSubmit)} className="max-w-md w-full mx-auto p-4 border rounded bg-white bg-opacity-90 overflow-y-auto max-h-[90vh]">
+        <h2 className="text-xl mb-4">{isEdit ? 'Editar Joia' : 'Cadastrar Joia'}</h2>
+        <FormField label="Nome" error={errors.name?.message}>
+          <input type="text" {...register('name')} className="w-full border p-2" />
+        </FormField>
+        <FormField label="Preço" error={errors.price?.message}>
+          <input type="number" step="0.01" {...register('price', { valueAsNumber: true })} className="w-full border p-2" />
+        </FormField>
+        <FormField label="Estoque" error={errors.stock?.message}>
+          <input type="number" {...register('stock', { valueAsNumber: true })} className="w-full border p-2" />
+        </FormField>
+        <FormField label="Categoria" error={errors.category?.message}>
+          <select {...register('category')} className="w-full border p-2">
+            <option value="">Selecione uma categoria</option>
+            {availableCategories.map(cat => (
+              <option key={cat.id} value={cat.id}>{cat.nome}</option>
+            ))}
+          </select>
+        </FormField>
+        <FormField label="Material" error={errors.material?.message}>
+          <input type="text" {...register('material')} className="w-full border p-2" />
+        </FormField>
+        <FormField label="URL da Imagem" error={errors.imageUrl?.message}>
+          <input type="url" {...register('imageUrl')} className="w-full border p-2" />
+        </FormField>
+        <FormField label="Descrição" error={errors.description?.message}>
+          <textarea {...register('description')} className="w-full border p-2" />
+        </FormField>
+        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+          {isEdit ? 'Salvar' : 'Cadastrar'}
+        </button>
+      </form>
+    </div>
   );
 } 

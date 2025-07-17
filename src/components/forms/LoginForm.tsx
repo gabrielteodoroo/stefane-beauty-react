@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema } from '../../schemas/user.schema';
 import type { LoginData } from '../../schemas/user.schema';
@@ -7,12 +8,16 @@ import { useAuthContext } from '../../contexts/useAuthContext';
 
 export default function LoginForm() {
   const { login, isLoading, error } = useAuthContext();
+  const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm<LoginData>({
     resolver: zodResolver(loginSchema),
   });
 
   const onSubmit = async (data: LoginData) => {
     await login(data);
+    if (!error) {
+      navigate('/admin');
+    }
   };
 
   return (
