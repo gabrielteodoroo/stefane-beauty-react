@@ -2,6 +2,7 @@ import React from 'react';
 import { useServices } from '../hooks/useServices';
 import { categoriasServicos } from '../utils/categoriasServicos';
 import type { ServiceData } from '../schemas/service.schema';
+import { LoadingIndicator } from '../components/LoadingIndicator';
 
 export const ServicosPage: React.FC = () => {
   const { data: servicos = [], isLoading } = useServices();
@@ -10,7 +11,7 @@ export const ServicosPage: React.FC = () => {
       <div className="container mx-auto px-6">
         <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">Catálogo de Serviços</h1>
         {isLoading ? (
-          <div className="text-center py-12">Carregando serviços...</div>
+          <LoadingIndicator label="Carregando serviços..." />
         ) : (
           categoriasServicos.map(cat => (
             <div key={cat.id} className="mb-12">

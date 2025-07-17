@@ -5,6 +5,7 @@ import { categories } from '../utils/categorias';
 import { useJewels } from '../hooks/useJewels';
 import type { JewelData } from '../schemas/jewel.schema';
 import type { Categoria } from '../types';
+import { LoadingIndicator } from '../components/LoadingIndicator';
 
 export const CatalogoPage: React.FC = () => {
   function asJewelDataArray(arr: unknown): JewelData[] {
@@ -56,7 +57,7 @@ export const CatalogoPage: React.FC = () => {
           </div>
         </div>
         {isLoading ? (
-          <div className="text-center py-12">Carregando joias...</div>
+          <LoadingIndicator label="Carregando joias..." />
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredJewelry.map((jewelry: JewelData) => (
