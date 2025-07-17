@@ -12,7 +12,6 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ title }) => {
 
   return (
     <>
-      {/* Sidebar desktop */}
       <aside className="hidden md:flex flex-col w-64 min-h-screen bg-purple-50 border-r border-purple-100 p-6">
         {title && <h2 className="text-xl font-bold text-purple-700 mb-8">{title}</h2>}
         <nav className="flex flex-col gap-2">
@@ -30,7 +29,6 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ title }) => {
           </Link>
         </nav>
       </aside>
-      {/* Sidebar mobile */}
       <div className="md:hidden">
         <button
           className="fixed top-4 left-4 z-50 bg-purple-600 text-white p-2 rounded-full shadow-lg"
