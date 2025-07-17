@@ -62,7 +62,7 @@ export const HomePage: React.FC = () => {
               <div className="text-4xl mb-4">💎</div>
               <h3 className="text-xl font-semibold mb-3 text-gray-800">Piercing Íntimo</h3>
               <p className="text-gray-600">Procedimentos delicados em ambiente privativo</p>
-            </div>
+              </div>
           </div>
         </div>
       </div>
@@ -70,7 +70,7 @@ export const HomePage: React.FC = () => {
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-6">
             <button 
-              onClick={() => navigate('/catalogo')}
+              onClick={() => { navigate('/catalogo'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               className="bg-purple-600 hover:bg-purple-700 text-white p-8 rounded-lg text-center transition-colors cursor-pointer"
             >
               <ShoppingBag className="w-12 h-12 mx-auto mb-4" />
@@ -78,7 +78,7 @@ export const HomePage: React.FC = () => {
               <p>Explore nossa coleção de joias premium</p>
             </button>
             <button 
-              onClick={() => navigate('/cuidados')}
+              onClick={() => { navigate('/cuidados'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               className="bg-rose-600 hover:bg-rose-700 text-white p-8 rounded-lg text-center transition-colors cursor-pointer"
             >
               <Heart className="w-12 h-12 mx-auto mb-4" />
