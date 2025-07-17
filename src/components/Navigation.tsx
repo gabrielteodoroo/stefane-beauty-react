@@ -68,8 +68,16 @@ export const Navigation: React.FC = () => {
       </div>
       {sidebarOpen && (
         <div className="fixed inset-0 z-50 flex">
-          <div className="fixed inset-0 bg-black bg-opacity-30" onClick={() => setSidebarOpen(false)} />
-          <div className="relative bg-white w-64 max-w-full h-full shadow-lg p-6 flex flex-col">
+          {/* Overlay animado */}
+          <div
+            className="fixed inset-0"
+            style={{ background: 'rgba(0,0,0,0.7)' }}
+            onClick={() => setSidebarOpen(false)}
+          />
+          {/* Menu do lado direito */}
+          <div
+            className={`fixed right-0 top-0 bottom-0 z-60 bg-white w-64 max-w-full h-full shadow-lg p-6 flex flex-col transform transition-transform duration-500 ease-in-out translate-x-0`}
+          >
             <button
               className="absolute top-4 right-4 text-gray-500 hover:text-purple-600"
               onClick={() => setSidebarOpen(false)}
