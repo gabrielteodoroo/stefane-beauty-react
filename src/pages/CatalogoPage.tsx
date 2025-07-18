@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import { handleWhatsApp } from '../utils/whatsapp';
 import { categories } from '../utils/categorias';
 import { useJewels } from '../hooks/useJewels';
@@ -15,6 +15,19 @@ export const CatalogoPage: React.FC = () => {
   const joias: JewelData[] = asJewelDataArray(data);
   const [categoryFilter, setCategoryFilter] = useState<string>('todas');
   const [search, setSearch] = useState<string>('');
+  const [expandedImage, setExpandedImage] = useState<string | null>(null);
+
+  // Travar scroll do body quando modal estiver aberto
+  React.useEffect(() => {
+    if (expandedImage) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [expandedImage]);
    
    
   const filteredJewelry: JewelData[] = joias.filter((jewelry: JewelData) => {
@@ -26,6 +39,27 @@ export const CatalogoPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
+      {/* Modal de imagem expandida */}
+      {expandedImage && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80"
+          onClick={() => setExpandedImage(null)}
+        >
+          <button
+            className="absolute top-6 right-6 text-white bg-black/60 rounded-full p-2 hover:bg-black/80 z-60"
+            onClick={e => { e.stopPropagation(); setExpandedImage(null); }}
+            aria-label="Fechar imagem"
+          >
+            <X className="w-7 h-7" />
+          </button>
+          <img
+            src={expandedImage}
+            alt="Joia expandida"
+            className="max-w-full max-h-[90vh] rounded-lg shadow-2xl border-4 border-white object-contain"
+            onClick={e => e.stopPropagation()}
+          />
+        </div>
+      )}
       <div className="container mx-auto px-6">
         <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">Catálogo de Joias</h1>
         <div className="bg-white rounded-lg p-6 mb-8 shadow-sm">
@@ -65,7 +99,8 @@ export const CatalogoPage: React.FC = () => {
                 <img 
                   src={jewelry.imageUrl} 
                   alt={jewelry.name}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-48 object-cover cursor-zoom-in"
+                  onClick={() => setExpandedImage(jewelry.imageUrl)}
                 />
                 <div className="p-4">
                   <h3 className="font-semibold text-lg mb-2 text-gray-800">{jewelry.name}</h3>
