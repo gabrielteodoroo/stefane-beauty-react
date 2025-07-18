@@ -19,8 +19,11 @@ export const ServicosPage: React.FC = () => {
               <div className="bg-white rounded-lg shadow-sm p-6">
                 <ul className="divide-y divide-gray-200">
                   {servicos.filter((s: ServiceData) => s.category === cat.id).map((servico: ServiceData) => (
-                    <li key={servico.id ?? servico.name} className="flex items-center justify-between px-4 py-3">
-                      <span className="block text-lg font-semibold text-gray-800">{servico.name}</span>
+                    <li key={servico.id ?? servico.name} className="flex flex-col md:flex-row md:items-center md:justify-between px-4 py-3 gap-2">
+                      <div>
+                        <span className="block text-lg font-semibold text-gray-800">{servico.name}</span>
+                        <span className="block text-gray-600 text-sm mt-1">{servico.description}</span>
+                      </div>
                       <span className="text-lg font-bold text-purple-600">R$ {servico.price.toFixed(2)}</span>
                     </li>
                   ))}
