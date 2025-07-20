@@ -60,6 +60,8 @@ export const AdminPage: React.FC = () => {
     setShowForm(true);
   };
 
+  const availableCategories = categories.filter(cat => cat.id !== 'todas');
+
   const handleDelete = (id: string) => {
     setJewelryToDelete(id);
     setShowConfirm(true);
@@ -77,9 +79,6 @@ export const AdminPage: React.FC = () => {
     setJewelryToDelete(null);
     setShowConfirm(false);
   };
-
-  const usedCategories = joias.filter((j: JewelData) => !editId || j.id !== editId).map((j: JewelData) => j.category);
-  const availableCategories = categories.filter(cat => cat.id !== 'todas' && (!usedCategories.includes(cat.id) || (editId && newJewelry.category === cat.id)));
 
   return (
     <div className="min-h-screen bg-gray-50 flex">

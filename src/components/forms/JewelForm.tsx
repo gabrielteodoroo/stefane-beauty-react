@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { jewelSchema } from '../../schemas/jewel.schema';
 import type { JewelData } from '../../schemas/jewel.schema';
-import { useCreateJewel, useUpdateJewel, useJewel, useJewels } from '../../hooks/useJewels';
+import { useCreateJewel, useUpdateJewel, useJewel } from '../../hooks/useJewels';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FormField } from './FormField';
 import { categories } from '../../utils/categorias';
@@ -16,7 +16,6 @@ export default function JewelForm() {
   const { data: jewel } = useJewel(id || '');
   const createJewel = useCreateJewel();
   const updateJewel = useUpdateJewel();
-  const { data: allJewels = [] } = useJewels();
 
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<JewelData>({
     resolver: zodResolver(jewelSchema),
@@ -30,10 +29,7 @@ export default function JewelForm() {
     }
   }, [isEdit, jewel, setValue]);
 
-  const usedCategories = allJewels
-    .filter((j: JewelData) => !isEdit || j.id !== id)
-    .map((j: JewelData) => j.category);
-  const availableCategories = categories.filter(cat => cat.id !== 'todas' && (!usedCategories.includes(cat.id) || (isEdit && jewel?.category === cat.id)));
+  const availableCategories = categories.filter(cat => cat.id !== 'todas');
 
   const onSubmit = async (data: JewelData) => {
     if (isEdit && id) {

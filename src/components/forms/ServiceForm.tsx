@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { serviceSchema } from '../../schemas/service.schema';
 import type { ServiceData } from '../../schemas/service.schema';
-import { useCreateService, useUpdateService, useService, useServices } from '../../hooks/useServices';
+import { useCreateService, useUpdateService, useService } from '../../hooks/useServices';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FormField } from './FormField';
 import { categoriasServicos } from '../../utils/categoriasServicos';
@@ -16,7 +16,6 @@ export default function ServiceForm() {
   const { data: service, isLoading: isLoadingService } = useService(id || '');
   const createService = useCreateService();
   const updateService = useUpdateService();
-  const { data: allServices = [] } = useServices();
 
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<ServiceData>({
     resolver: zodResolver(serviceSchema),
@@ -31,10 +30,7 @@ export default function ServiceForm() {
     }
   }, [isEdit, service, setValue]);
 
-  const usedCategories = allServices
-    .filter((s: ServiceData) => !isEdit || s.id !== id)
-    .map((s: ServiceData) => s.category);
-  const availableCategories = categoriasServicos.filter(cat => !usedCategories.includes(cat.id) || (isEdit && service?.category === cat.id));
+  const availableCategories = categoriasServicos;
 
   const onSubmit = async (data: ServiceData) => {
     try {

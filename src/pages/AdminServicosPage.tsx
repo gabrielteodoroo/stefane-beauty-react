@@ -63,8 +63,7 @@ export const AdminServicosPage: React.FC = () => {
     setShowForm(true);
   };
 
-  const usedCategories = servicos.filter((s: ServiceData) => !editId || s.id !== editId).map((s: ServiceData) => s.category);
-  const availableCategories = categoriasServicos.filter(cat => !usedCategories.includes(cat.id) || (editId && novoServico.category === cat.id));
+  const availableCategories = categoriasServicos;
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
