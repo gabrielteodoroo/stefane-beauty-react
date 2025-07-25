@@ -26,7 +26,7 @@ export function useJewel(id: string) {
 export function useCreateJewel() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (data: JewelData) => createJewel(data).then(res => res.data),
+    mutationFn: (data: FormData) => createJewel(data).then(res => res.data),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['jewels'] }),
   });
 }
@@ -34,7 +34,7 @@ export function useCreateJewel() {
 export function useUpdateJewel() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, data }: { id: string; data: JewelData }) => updateJewel(id, data).then(res => res.data),
+    mutationFn: ({ id, data }: { id: string; data: FormData }) => updateJewel(id, data).then(res => res.data),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['jewels'] }),
   });
 }
