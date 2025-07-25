@@ -7,7 +7,7 @@ export const jewelSchema = z.object({
   stock: z.number().min(0, 'Estoque obrigatório'),
   category: z.string().min(2, 'Categoria obrigatória'),
   material: z.string().min(2, 'Material obrigatório'),
-  imageUrl: z.string().url('URL da imagem inválida'),
+  imageUrl: z.string().optional(),
   description: z.string().min(2, 'Descrição obrigatória'),
 });
 
