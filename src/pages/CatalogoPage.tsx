@@ -94,44 +94,54 @@ export const CatalogoPage: React.FC = () => {
           <LoadingIndicator label="Carregando joias..." />
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredJewelry.map((jewelry: JewelData) => (
-              <div key={jewelry.id ?? jewelry.name} className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow overflow-hidden">
-                <img 
-                  src={jewelry.imageUrl} 
-                  alt={jewelry.name}
-                  className="w-full h-48 object-cover cursor-zoom-in"
-                  onClick={() => setExpandedImage(jewelry.imageUrl)}
-                />
-                <div className="p-4">
-                  <h3 className="font-semibold text-lg mb-2 text-gray-800">{jewelry.name}</h3>
-                  <p className="text-gray-600 text-sm mb-2">{jewelry.material}</p>
-                  <p className="text-gray-500 text-sm mb-3">{jewelry.description}</p>
-                  <div className="flex justify-between items-center mb-3">
-                    <span className="text-2xl font-bold text-purple-600">
-                      R$ {jewelry.price.toFixed(2)}
-                    </span>
-                    <span className={`px-2 py-1 rounded-full text-xs ${
-                      jewelry.stock > 10 ? 'bg-green-100 text-green-800' :
-                      jewelry.stock > 0 ? 'bg-yellow-100 text-yellow-800' :
-                      'bg-red-100 text-red-800'
-                    }`}>
-                      {jewelry.stock > 0 ? `${jewelry.stock} disponíveis` : 'Esgotado'}
-                    </span>
+            {filteredJewelry.map((jewelry: JewelData) => {
+              const bucket = import.meta.env.VITE_BUCKET;
+              const imageUrl = jewelry.imageUrl;
+              const imgPath = imageUrl && imageUrl.startsWith('/') ? imageUrl : imageUrl ? '/' + imageUrl : '';
+              const urlCompleta = `${bucket}${imgPath}`;
+              return (
+                <div key={jewelry.id ?? jewelry.name} className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow overflow-hidden">
+                  {imageUrl ? (
+                    <img
+                      src={urlCompleta}
+                      alt={jewelry.name}
+                      className="w-full h-48 object-cover cursor-zoom-in"
+                      onClick={() => setExpandedImage(urlCompleta)}
+                    />
+                  ) : (
+                    <div className="w-full h-48 flex items-center justify-center bg-gray-100 text-gray-400">Sem imagem</div>
+                  )}
+                  <div className="p-4">
+                    <h3 className="font-semibold text-lg mb-2 text-gray-800">{jewelry.name}</h3>
+                    <p className="text-gray-600 text-sm mb-2">{jewelry.material}</p>
+                    <p className="text-gray-500 text-sm mb-3">{jewelry.description}</p>
+                    <div className="flex justify-between items-center mb-3">
+                      <span className="text-2xl font-bold text-purple-600">
+                        R$ {jewelry.price.toFixed(2)}
+                      </span>
+                      <span className={`px-2 py-1 rounded-full text-xs ${
+                        jewelry.stock > 10 ? 'bg-green-100 text-green-800' :
+                        jewelry.stock > 0 ? 'bg-yellow-100 text-yellow-800' :
+                        'bg-red-100 text-red-800'
+                      }`}>
+                        {jewelry.stock > 0 ? `${jewelry.stock} disponíveis` : 'Esgotado'}
+                      </span>
+                    </div>
+                    <button 
+                      onClick={() => handleWhatsApp(jewelry as JewelData)}
+                      disabled={jewelry.stock === 0}
+                      className={`w-full py-2 rounded-lg font-medium transition-colors cursor-pointer ${
+                        jewelry.stock > 0 
+                          ? 'bg-green-500 hover:bg-green-600 text-white' 
+                          : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                      }`}
+                    >
+                      {jewelry.stock > 0 ? 'Quero Esta!' : 'Indisponível'}
+                    </button>
                   </div>
-                  <button 
-                    onClick={() => handleWhatsApp(jewelry as JewelData)}
-                    disabled={jewelry.stock === 0}
-                    className={`w-full py-2 rounded-lg font-medium transition-colors cursor-pointer ${
-                      jewelry.stock > 0 
-                        ? 'bg-green-500 hover:bg-green-600 text-white' 
-                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                    }`}
-                  >
-                    {jewelry.stock > 0 ? 'Quero Esta!' : 'Indisponível'}
-                  </button>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
         {filteredJewelry.length === 0 && !isLoading && (
