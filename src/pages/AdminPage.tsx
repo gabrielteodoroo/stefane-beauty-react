@@ -14,7 +14,6 @@ export const AdminPage: React.FC = () => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [jewelryToDelete, setJewelryToDelete] = useState<string | null>(null);
 
-
   const handleDelete = (id: string) => {
     setJewelryToDelete(id);
     setShowConfirm(true);
@@ -75,11 +74,13 @@ export const AdminPage: React.FC = () => {
                       <td className="px-2 py-2">
                         {jewelry.imageUrl && (
                           (() => {
-                            const bucket = import.meta.env.VITE_BUCKET;
-                            const imgPath = jewelry.imageUrl.startsWith('/') ? jewelry.imageUrl : `/${jewelry.imageUrl}`;
+                            const bucket = import.meta.env.VITE_BUCKET || '';
+                            const cleanImageUrl = jewelry.imageUrl.replace(/^undefined/, '');
+                            const imgPath = cleanImageUrl.startsWith('/') ? cleanImageUrl : `/${cleanImageUrl}`;
+                            const urlCompleta = bucket ? `${bucket}${imgPath}` : imgPath;
                             return (
                               <img
-                                src={`${bucket}${imgPath}`}
+                                src={urlCompleta}
                                 alt={jewelry.name}
                                 className="w-16 h-16 object-contain border rounded"
                               />
@@ -129,7 +130,7 @@ export const AdminPage: React.FC = () => {
   );
 };
 
-// Componente auxiliar para travar o scroll do body
+
 function ModalScrollLock({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const original = document.body.style.overflow;

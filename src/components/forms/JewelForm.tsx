@@ -1,14 +1,10 @@
-import  { useEffect } from 'react';
-import { useEffect as useEffectReact } from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { jewelSchema } from '../../schemas/jewel.schema';
-import type { JewelData } from '../../schemas/jewel.schema';
-import { useCreateJewel, useUpdateJewel, useJewel } from '../../hooks/useJewels';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useJewel, useCreateJewel, useUpdateJewel } from '../../hooks/useJewels';
+import { jewelSchema, type JewelData } from '../../schemas/jewel.schema';
 import { categories } from '../../utils/categorias';
-import { useState } from 'react';
-import { useRef } from 'react';
 
 interface JewelFormProps {
   id?: string;
@@ -31,6 +27,7 @@ export default function JewelForm({ id, onClose }: JewelFormProps) {
   const [imageName, setImageName] = useState<string>('');
   const [imageError, setImageError] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
   useEffect(() => {
     if (isEdit && jewel) {
       Object.entries(jewel).forEach(([key, value]) => {
@@ -38,6 +35,7 @@ export default function JewelForm({ id, onClose }: JewelFormProps) {
       });
     }
   }, [isEdit, jewel, setValue]);
+
   const availableCategories = categories.filter(cat => cat.id !== 'todas');
 
   const onSubmit = async (data: JewelData) => {
@@ -82,7 +80,7 @@ export default function JewelForm({ id, onClose }: JewelFormProps) {
     else navigate('/jewels');
   };
 
-  useEffectReact(() => {
+  useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => {
       document.body.style.overflow = '';
@@ -113,14 +111,14 @@ export default function JewelForm({ id, onClose }: JewelFormProps) {
               <label className="block text-sm font-medium text-gray-700 mb-2">Categoria</label>
               <select {...register('category')} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
                 <option value="">Selecione uma categoria</option>
-                {availableCategories.map(cat => (
-                  <option key={cat.id} value={cat.id}>{cat.nome}</option>
+                {availableCategories.map((category) => (
+                  <option key={category.id} value={category.id}>{category.nome}</option>
                 ))}
               </select>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Material</label>
-              <input type="text" {...register('material')} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500" placeholder="Ex: Titânio, Aço Cirúrgico" />
+              <input type="text" {...register('material')} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500" />
             </div>
           </div>
           <div>
@@ -169,7 +167,7 @@ export default function JewelForm({ id, onClose }: JewelFormProps) {
                   <div className="flex flex-col items-center">
                     <span className="text-xs text-gray-500 mb-1">Imagem atual:</span>
                     <img
-                      src={`${import.meta.env.VITE_BUCKET}${jewel.imageUrl.startsWith('/') ? jewel.imageUrl : '/' + jewel.imageUrl}`}
+                      src={`${import.meta.env.VITE_BUCKET || ''}${jewel.imageUrl.replace(/^undefined/, '').startsWith('/') ? jewel.imageUrl.replace(/^undefined/, '') : '/' + jewel.imageUrl.replace(/^undefined/, '')}`}
                       alt="Imagem atual"
                       className="w-20 h-20 object-contain border rounded"
                     />
@@ -192,7 +190,11 @@ export default function JewelForm({ id, onClose }: JewelFormProps) {
             {isEdit ? 'Salvar Alterações' : 'Adicionar Joia'}
           </button>
           {onClose && (
-            <button type="button" onClick={onClose} className="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 rounded-lg font-semibold transition-colors cursor-pointer mt-2">
+            <button 
+              type="button" 
+              onClick={onClose} 
+              className="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 py-3 rounded-lg font-semibold transition-colors cursor-pointer mt-2"
+            >
               Cancelar
             </button>
           )}

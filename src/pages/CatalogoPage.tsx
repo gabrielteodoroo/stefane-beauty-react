@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, X } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { handleWhatsApp } from '../utils/whatsapp';
 import { categories } from '../utils/categorias';
 import { useJewels } from '../hooks/useJewels';
@@ -13,6 +13,9 @@ export const CatalogoPage: React.FC = () => {
   }
   const { data, isLoading } = useJewels();
   const joias: JewelData[] = asJewelDataArray(data);
+  
+
+  
   const [categoryFilter, setCategoryFilter] = useState<string>('todas');
   const [search, setSearch] = useState<string>('');
   const [expandedImage, setExpandedImage] = useState<string | null>(null);
@@ -39,27 +42,6 @@ export const CatalogoPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
-      {/* Modal de imagem expandida */}
-      {expandedImage && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80"
-          onClick={() => setExpandedImage(null)}
-        >
-          <button
-            className="absolute top-6 right-6 text-white bg-black/60 rounded-full p-2 hover:bg-black/80 z-60"
-            onClick={e => { e.stopPropagation(); setExpandedImage(null); }}
-            aria-label="Fechar imagem"
-          >
-            <X className="w-7 h-7" />
-          </button>
-          <img
-            src={expandedImage}
-            alt="Joia expandida"
-            className="max-w-full max-h-[90vh] rounded-lg shadow-2xl border-4 border-white object-contain"
-            onClick={e => e.stopPropagation()}
-          />
-        </div>
-      )}
       <div className="container mx-auto px-6">
         <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">Catálogo de Joias</h1>
         <div className="bg-white rounded-lg p-6 mb-8 shadow-sm">
@@ -95,10 +77,11 @@ export const CatalogoPage: React.FC = () => {
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredJewelry.map((jewelry: JewelData) => {
-              const bucket = import.meta.env.VITE_BUCKET;
+              const bucket = import.meta.env.VITE_BUCKET || '';
               const imageUrl = jewelry.imageUrl;
-              const imgPath = imageUrl && imageUrl.startsWith('/') ? imageUrl : imageUrl ? '/' + imageUrl : '';
-              const urlCompleta = `${bucket}${imgPath}`;
+              const cleanImageUrl = imageUrl?.replace(/^undefined/, '') || '';
+              const imgPath = cleanImageUrl && cleanImageUrl.startsWith('/') ? cleanImageUrl : cleanImageUrl ? '/' + cleanImageUrl : '';
+              const urlCompleta = bucket ? `${bucket}${imgPath}` : imgPath;
               return (
                 <div key={jewelry.id ?? jewelry.name} className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow overflow-hidden">
                   {imageUrl ? (
