@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import { handleWhatsApp } from '../utils/whatsapp';
 import { categories } from '../utils/categorias';
 import { useJewels } from '../hooks/useJewels';
@@ -31,6 +31,18 @@ export const CatalogoPage: React.FC = () => {
       document.body.style.overflow = '';
     };
   }, [expandedImage]);
+
+  // Função para fechar o modal
+  const closeModal = () => {
+    setExpandedImage(null);
+  };
+
+  // Função para fechar ao clicar fora da imagem
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      closeModal();
+    }
+  };
    
    
   const filteredJewelry: JewelData[] = joias.filter((jewelry: JewelData) => {
@@ -133,6 +145,29 @@ export const CatalogoPage: React.FC = () => {
           </div>
         )}
       </div>
+
+            {/* Modal para imagem expandida */}
+      {expandedImage && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
+          onClick={handleBackdropClick}
+        >
+          <div className="relative bg-white rounded-lg shadow-2xl">
+            <button
+              onClick={closeModal}
+              className="absolute -top-3 -right-3 z-10 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100 transition-colors"
+              aria-label="Fechar imagem"
+            >
+              <X className="w-6 h-6 text-gray-600" />
+            </button>
+            <img
+              src={expandedImage}
+              alt="Imagem expandida"
+              className="max-w-[80vw] max-h-[80vh] object-contain rounded-lg"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }; 
