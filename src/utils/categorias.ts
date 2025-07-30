@@ -8,5 +8,9 @@ export const categories: Categoria[] = [
   { id: 'lingua', nome: 'Língua' },
   { id: 'umbigo', nome: 'Umbigo' },
   { id: 'intimo', nome: 'Íntimo' },
-  { id: 'microdermal', nome: 'Microdermal' }
+  { id: 'microdermal', nome: 'Microdermal' },
+  { id: 'brincos', nome: 'Brincos'},
+  { id: 'colar', nome: 'Colar'},
+  { id: 'pulseira', nome: 'Pulseira'},
+  { id: 'anel', nome: 'Anel'},
 ]; 
