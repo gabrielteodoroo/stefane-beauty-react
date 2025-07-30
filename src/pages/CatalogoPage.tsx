@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Search, X } from 'lucide-react';
 import { handleWhatsApp } from '../utils/whatsapp';
 import { categories } from '../utils/categorias';
@@ -20,8 +20,7 @@ export const CatalogoPage: React.FC = () => {
   const [search, setSearch] = useState<string>('');
   const [expandedImage, setExpandedImage] = useState<string | null>(null);
 
-  // Travar scroll do body quando modal estiver aberto
-  React.useEffect(() => {
+  useEffect(() => {
     if (expandedImage) {
       document.body.style.overflow = 'hidden';
     } else {
@@ -32,12 +31,10 @@ export const CatalogoPage: React.FC = () => {
     };
   }, [expandedImage]);
 
-  // Função para fechar o modal
   const closeModal = () => {
     setExpandedImage(null);
   };
 
-  // Função para fechar ao clicar fora da imagem
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
       closeModal();
@@ -145,8 +142,6 @@ export const CatalogoPage: React.FC = () => {
           </div>
         )}
       </div>
-
-            {/* Modal para imagem expandida */}
       {expandedImage && (
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
