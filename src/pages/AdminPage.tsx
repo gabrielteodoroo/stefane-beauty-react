@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useJewels, useDeleteJewel } from '../hooks/useJewels';
 import type { JewelData } from '../schemas/jewel.schema';
 import { AdminSidebar } from '../components/AdminSidebar';
-import { Trash } from 'lucide-react';
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import JewelForm from '../components/forms/JewelForm';
+import { EditButton } from '../components/buttons/editButton';
+import { DeleteButton } from '../components/buttons/deleteButton';
+import { ModalScrollLock } from '../components/ModalScrollLock';
+import { ConfirmModal } from '../components/ConfirmModal';
 
 export const AdminPage: React.FC = () => {
   const { data: joias = [], isLoading } = useJewels();
@@ -91,21 +94,14 @@ export const AdminPage: React.FC = () => {
                       <td className="px-2 py-2">{jewelry.name}</td>
                       <td className="px-2 py-2">R$ {jewelry.price.toFixed(2)}</td>
                       <td className="px-2 py-2">{jewelry.stock}</td>
-                    <td className="px-2 py-2 flex gap-2">
-                      <button
-                        onClick={() => setEditId(jewelry.id ?? null)}
-                        className="bg-yellow-400 hover:bg-yellow-500 text-white px-2 py-1 rounded cursor-pointer flex items-center gap-1"
-                        title="Editar"
-                      >
-                          Editar
-                      </button>
-                      <button
-                          onClick={() => handleDelete(jewelry.id ?? '')}
-                        className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded cursor-pointer flex items-center gap-1"
-                        title="Excluir"
-                      >
-                        <Trash size={16} /> Excluir
-                      </button>
+                    <td className="px-2 py-2">
+                      <div className="flex gap-2 items-center">
+                        <EditButton onClick={() => {
+                          setEditId(jewelry.id ?? null);
+                          setShowForm(true);
+                        }} />
+                        <DeleteButton onClick={() => handleDelete(jewelry.id ?? '')} />
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -114,28 +110,13 @@ export const AdminPage: React.FC = () => {
             )}
           </div>
         </div>
-        {showConfirm && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50">
-            <div className="bg-white p-6 rounded-lg shadow-lg">
-              <p className="mb-4">Tem certeza que deseja excluir esta joia?</p>
-              <div className="flex gap-4">
-                <button onClick={confirmDelete} className="bg-red-500 text-white px-4 py-2 rounded">Excluir</button>
-                <button onClick={cancelDelete} className="bg-gray-300 px-4 py-2 rounded">Cancelar</button>
-              </div>
-            </div>
-          </div>
-        )}
+        <ConfirmModal
+          isOpen={showConfirm}
+          message="Tem certeza que deseja excluir esta joia?"
+          onConfirm={confirmDelete}
+          onCancel={cancelDelete}
+        />
       </main>
     </div>
   );
-};
-
-
-function ModalScrollLock({ children }: { children: React.ReactNode }) {
-  useEffect(() => {
-    const original = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = original; };
-  }, []);
-  return <>{children}</>;
-} 
+}; 
