@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import {  useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useService, useCreateService, useUpdateService } from '../../hooks/useServices';
@@ -23,7 +23,9 @@ export default function ServicosForm({ id, onClose }: ServicosFormProps) {
   useEffect(() => {
     if (isEdit && service) {
       Object.entries(service).forEach(([key, value]) => {
-        setValue(key as keyof ServiceData, value);
+        if (key in service) {
+          setValue(key as keyof ServiceData, value as ServiceData[keyof ServiceData]);
+        }
       });
     }
   }, [isEdit, service, setValue]);

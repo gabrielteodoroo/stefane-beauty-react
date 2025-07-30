@@ -6,6 +6,8 @@ import { LoadingIndicator } from '../components/LoadingIndicator';
 import { ModalScrollLock } from '../components/ModalScrollLock';
 import { ConfirmModal } from '../components/ConfirmModal';
 import ServicosForm from '../components/forms/ServicosForm';
+import { EditButton } from '../components/buttons/editButton';
+import { DeleteButton } from '../components/buttons/deleteButton';
 
 export const AdminServicosPage: React.FC = () => {
   const { data: servicos = [], isLoading } = useServices();
@@ -81,20 +83,9 @@ export const AdminServicosPage: React.FC = () => {
                       <td className="px-2 py-2">R$ {servico.price.toFixed(2)}</td>
                       <td className="px-2 py-2">{servico.category}</td>
                     <td className="px-2 py-2 flex gap-2">
-                      <button
-                          onClick={() => handleEdit(servico)}
-                        className="bg-yellow-400 hover:bg-yellow-500 text-white px-2 py-1 rounded cursor-pointer"
-                        title="Editar"
-                      >
-                        Editar
-                      </button>
-                      <button
-                          onClick={() => handleDelete(servico.id ?? '')}
-                        className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded cursor-pointer"
-                        title="Excluir"
-                      >
-                        Excluir
-                      </button>
+                      <EditButton onClick={() => handleEdit(servico)} />
+                      <DeleteButton onClick={() => handleDelete(servico.id ?? '')} />
+                      
                     </td>
                   </tr>
                 ))}
