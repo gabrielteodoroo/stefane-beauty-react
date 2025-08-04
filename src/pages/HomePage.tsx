@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Phone, Shield, Award, Star, ShoppingBag, Heart } from 'lucide-react';
+import { Phone, Shield, Award, Star, ShoppingBag, Heart, Scissors } from 'lucide-react';
 import { handleWhatsApp } from '../utils/whatsapp';
 import stefaneImage from '../assets/stefane-png.png';
 
@@ -68,7 +68,7 @@ export const HomePage: React.FC = () => {
       </div>
       <div className="py-12 bg-gray-50">
         <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-3 gap-6">
             <button 
               onClick={() => { navigate('/catalogo'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               className="bg-purple-600 hover:bg-purple-700 text-white p-8 rounded-lg text-center transition-colors cursor-pointer"
@@ -76,6 +76,14 @@ export const HomePage: React.FC = () => {
               <ShoppingBag className="w-12 h-12 mx-auto mb-4" />
               <h3 className="text-2xl font-bold mb-2">Ver Catálogo</h3>
               <p>Explore nossa coleção de joias premium</p>
+            </button>
+            <button 
+              onClick={() => { navigate('/servicos'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              className="bg-indigo-600 hover:bg-indigo-700 text-white p-8 rounded-lg text-center transition-colors cursor-pointer"
+            >
+              <Scissors className="w-12 h-12 mx-auto mb-4" />
+              <h3 className="text-2xl font-bold mb-2">Nossos Serviços</h3>
+              <p>Conheça todos os tipos de piercing disponíveis</p>
             </button>
             <button 
               onClick={() => { navigate('/cuidados'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
