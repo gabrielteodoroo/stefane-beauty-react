@@ -18,7 +18,6 @@ export default function JewelForm({ id, onClose }: JewelFormProps) {
   const { data: jewel } = useJewel(id || urlId || '');
   const createJewel = useCreateJewel();
   const updateJewel = useUpdateJewel();
-
   const { register, handleSubmit, setValue} = useForm<JewelData>({
     resolver: zodResolver(jewelSchema),
   });
@@ -30,8 +29,18 @@ export default function JewelForm({ id, onClose }: JewelFormProps) {
 
   useEffect(() => {
     if (isEdit && jewel) {
-      Object.entries(jewel).forEach(([key, value]) => {
-        setValue(key as keyof JewelData, value);
+      const jewelWithDecimalPrice = {
+        ...jewel,
+        price: parseFloat(jewel.price.toString())
+      };
+      
+      Object.entries(jewelWithDecimalPrice).forEach(([key, value]) => {
+        if (key === 'imageUrl' && typeof value === 'string') {
+          const cleanValue = value.replace(/^undefined/, '').replace(/^\//, '');
+          setValue(key as keyof JewelData, cleanValue);
+        } else {
+          setValue(key as keyof JewelData, value);
+        }
       });
     }
   }, [isEdit, jewel, setValue]);
@@ -42,7 +51,7 @@ export default function JewelForm({ id, onClose }: JewelFormProps) {
     setImageError('');
     const formData = new FormData();
     formData.append('name', data.name);
-    formData.append('price', String(data.price));
+    formData.append('price', data.price.toFixed(2));
     formData.append('stock', String(data.stock));
     formData.append('category', data.category);
     formData.append('material', data.material);
@@ -51,10 +60,18 @@ export default function JewelForm({ id, onClose }: JewelFormProps) {
       formData.append('image', selectedImage);
     }
     if (isEdit && id) {
-      if (!selectedImage && !data.imageUrl && jewel?.imageUrl) {
-        formData.append('imageUrl', jewel.imageUrl);
-      } else if (!selectedImage && data.imageUrl) {
-        formData.append('imageUrl', data.imageUrl);
+      if (!selectedImage) {
+        let imageUrlToSend = '';
+        
+        if (jewel?.imageUrl) {
+          imageUrlToSend = jewel.imageUrl.replace(/^undefined/, '').replace(/^\//, '');
+        } else if (data.imageUrl) {
+          imageUrlToSend = data.imageUrl.replace(/^undefined/, '').replace(/^\//, '');
+        }
+        
+        if (imageUrlToSend && imageUrlToSend !== '') {
+          formData.append('imageUrl', imageUrlToSend);
+        }
       }
       try {
         await updateJewel.mutateAsync({ id, data: formData });
