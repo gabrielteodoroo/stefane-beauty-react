@@ -13,4 +13,5 @@ export const categories: Categoria[] = [
   { id: 'colar', nome: 'Colar'},
   { id: 'pulseira', nome: 'Pulseira'},
   { id: 'anel', nome: 'Anel'},
+  { id: 'piercing', nome: 'Piercing'},
 ]; 
